@@ -172,3 +172,16 @@
 - [ ] Current returns the overridden value if present, otherwise the original line
 - [ ] Previous/Next navigate the cursor within bounds and return the current line
 - [ ] Cursor starts at the last position (empty sentinel line)
+
+## Task 10: Input reading with adaptive event polling
+
+### Acceptance Criteria
+- [ ] Reader reads from shell commands via ReadFromCommand, executing with $SHELL -c
+- [ ] Reader reads from channels via ReadChannel
+- [ ] Reader reads from stdin via ReadFromStdin
+- [ ] Feed splits input on newline (or null byte if delimNil) using slab-based buffering
+- [ ] Leftover bytes from partial reads are accumulated and pushed when delimiter is found or EOF
+- [ ] StartEventPoller polls for EvtReadNew with adaptive interval (min 10ms, step 5ms, max 50ms)
+- [ ] Fin signals EvtReadFin and reports command failure (non-nil command pointer) unless killed or successful
+- [ ] Terminate kills the running process and sets killed flag under lock
+- [ ] Wait mode blocks Fin until the event poller acknowledges via finChan

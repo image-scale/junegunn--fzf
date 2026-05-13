@@ -13,5 +13,5 @@ Implement fzf's core functionality bottom-up by dependency order: start with fou
 - [x] Task 7: Implement pattern-based search with extended syntax supporting AND/OR operators, negation, fuzzy/exact/prefix/suffix/equal match types, smart case sensitivity, nth-field matching, and bitmap cache integration
 - [x] Task 8: Implement result merging that combines sorted result lists from multiple workers using lazy k-way merge, with a pass-through mode for unfiltered results read directly from chunks
 - [x] Task 9: Implement file-backed command history with cursor navigation, in-memory overrides, maximum size enforcement, and persistent append
-- [ ] Task 10: Implement input reading from stdin, shell commands, or filesystem walking with adaptive event polling, delimiter support, and asynchronous event signaling
+- [x] Task 10: Implement input reading from stdin, shell commands, or filesystem walking with adaptive event polling, delimiter support, and asynchronous event signaling
 - [ ] Task 11: Implement parallel matching coordination that distributes chunks across worker goroutines, manages match requests with cancellation support, caches final results, and reports progress
