@@ -78,3 +78,27 @@
 - [ ] SplitNth parses comma-separated nth-expressions into a slice of Ranges
 - [ ] DelimiterFromString creates a Delimiter: single chars and non-regex strings use str field, valid regex patterns use regex field
 - [ ] RangesToString converts Range slice back to string representation
+
+## Task 5: Chunk-based item storage with bitmap query caching
+
+### Acceptance Criteria
+- [ ] Item stores text as charutil.Chars, optional origText for raw bytes, optional colors for ANSI ranges, and an Index piggybacked in Chars
+- [ ] Item.AsString(stripAnsi) returns origText (with optional ANSI stripping) or falls back to text.ToString()
+- [ ] Item.TrimLength() delegates to Chars.TrimLength() for cached trimmed length
+- [ ] Item.Colors() returns color ranges or empty slice if nil
+- [ ] Chunk stores items in a fixed-size array [chunkSize]Item with a count field
+- [ ] Chunk.IsFull() returns true when count equals chunkSize (1024)
+- [ ] ItemBuilder closure populates an Item from raw bytes, returns success
+- [ ] ChunkList provides thread-safe Push that appends items, creating new Chunks as needed
+- [ ] ChunkList.Snapshot returns an immutable copy of the chunk slice with boundary chunks duplicated
+- [ ] Snapshot with tail>0 truncates from the front, keeping only the last tail items, retiring evicted chunks from cache
+- [ ] Snapshot immutability: pushing more items after snapshot does not affect previous snapshot
+- [ ] CountItems efficiently counts total items assuming middle chunks are full
+- [ ] GetItems collects the first n items across all chunks
+- [ ] ChunkList.Clear sets chunks to nil under lock
+- [ ] ChunkList.ForEachItem iterates all items under lock, calling done callback while locked
+- [ ] ChunkBitmap is a fixed-size [chunkBitWords]uint64 array (16 words for 1024-bit bitmap)
+- [ ] ChunkCache.Add only caches full chunks with non-empty keys and matchCount <= queryCacheMax
+- [ ] ChunkCache.Lookup returns exact bitmap match for a (chunk, key) pair
+- [ ] ChunkCache.Search finds bitmap for longest prefix or suffix of the key (incremental refinement)
+- [ ] ChunkCache.Clear and retire remove cache entries under lock
