@@ -144,3 +144,18 @@
 - [ ] Pattern caching via patternCache map keyed by normalized string
 - [ ] Denylist and startIndex support for skipping specific items
 - [ ] iter adjusts match offsets by token prefixLength for correct positioning
+
+## Task 8: Result merging with lazy k-way merge
+
+### Acceptance Criteria
+- [ ] Merger holds multiple sorted result lists and provides a single globally-sorted view via lazy k-way merge
+- [ ] mergedGet lazily advances cursors across lists, picking the minimum-rank result at each step
+- [ ] NewMerger creates a merge-mode merger with cursors for each list
+- [ ] PassMerger creates a pass-through merger that reads items directly from chunks in original order
+- [ ] EmptyMerger returns a merger with zero items
+- [ ] Get returns items by index, supporting both sorted merge and unsorted pass-through modes
+- [ ] Tac mode reverses the index mapping for pass-through and unsorted modes
+- [ ] FindIndex locates an item by its item index (O(1) in pass mode, O(n) scan otherwise)
+- [ ] ToMap converts all items to a map keyed by item index
+- [ ] Cacheable returns true when count is below MergerCacheMax (100000)
+- [ ] Length returns total count across all lists
