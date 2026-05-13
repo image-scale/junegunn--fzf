@@ -57,3 +57,24 @@
 - [ ] RunesWidth calculates display width of runes with tab stop support and overflow detection
 - [ ] Truncate truncates a string to fit within a display width limit
 - [ ] CompareVersions compares dot-separated version strings numerically
+
+## Task 4: Text tokenization with field selection
+
+### Acceptance Criteria
+- [ ] Range type represents nth-expressions with begin/end fields; rangeEllipsis=0 is the sentinel for open-ended ranges
+- [ ] Range.IsFull() returns true when both begin and end are rangeEllipsis (i.e., ".." meaning all fields)
+- [ ] ParseRange parses ".." as full range, "N.." as begin-open, "..N" as end-open, "N..M" as closed range, "N" as single field
+- [ ] ParseRange normalizes begin=1 to rangeEllipsis and end=-1 to rangeEllipsis
+- [ ] ParseRange rejects invalid inputs: zero index, mixed negative/positive ranges, non-numeric, too many ".." separators
+- [ ] Token type holds a *Chars text pointer and int32 prefixLength tracking position in original string
+- [ ] Delimiter type has optional regex and str fields; IsAwk() returns true when both are nil
+- [ ] AWK-style tokenization splits on whitespace runs (tab/space/newline), each token includes trailing whitespace, leading whitespace is tracked as prefix length
+- [ ] String delimiter tokenization splits after each occurrence of the delimiter string
+- [ ] Regex delimiter tokenization splits at regex match boundaries, each token includes the matched delimiter
+- [ ] Transform selects and reorders tokens according to Range specifications, supporting negative indices (counting from end)
+- [ ] Transform handles single field, field ranges, open-ended ranges, and full range (rangeEllipsis)
+- [ ] JoinTokens concatenates all token texts into a single string
+- [ ] StripLastDelimiter removes trailing delimiter (string, regex match, or whitespace for AWK mode)
+- [ ] SplitNth parses comma-separated nth-expressions into a slice of Ranges
+- [ ] DelimiterFromString creates a Delimiter: single chars and non-regex strings use str field, valid regex patterns use regex field
+- [ ] RangesToString converts Range slice back to string representation

@@ -6,8 +6,8 @@ Implement fzf's core functionality bottom-up by dependency order: start with fou
 ## Tasks
 - [x] Task 1: Implement fuzzy text matching with character handling and scoring (algo package with Chars, Slab, FuzzyMatchV1, FuzzyMatchV2, ExactMatch, PrefixMatch, SuffixMatch, EqualMatch, character normalization, and scoring scheme initialization)
 - [x] Task 2: Implement ANSI escape sequence parsing that strips ANSI codes from input text while tracking color/attribute state across foreground, background, underline colors, text attributes, and hyperlinks
-- [>] Task 3: Implement concurrent coordination primitives including a thread-safe boolean, an event bus with blocking wait and selective event watching, and general utility functions for display width calculation, string truncation, value clamping, and version comparison
-- [ ] Task 4: Implement text tokenization that splits input into fields using AWK-style whitespace splitting, string delimiters, or regex delimiters, with range-based field selection and reordering
+- [x] Task 3: Implement concurrent coordination primitives including a thread-safe boolean, an event bus with blocking wait and selective event watching, and general utility functions for display width calculation, string truncation, value clamping, and version comparison
+- [x] Task 4: Implement text tokenization that splits input into fields using AWK-style whitespace splitting, string delimiters, or regex delimiters, with range-based field selection and reordering
 - [ ] Task 5: Implement chunk-based item storage that holds items in fixed-size arrays with thread-safe append, snapshot isolation, tail-trimming, and bitmap-based query result caching for incremental search refinement
 - [ ] Task 6: Implement result scoring and ranking that evaluates match quality using configurable sort criteria (score, length, begin position, end position, chunk length) and sorts results using radix sort with comparison sort fallback
 - [ ] Task 7: Implement pattern-based search with extended syntax supporting AND/OR operators, negation, fuzzy/exact/prefix/suffix/equal match types, smart case sensitivity, nth-field matching, and bitmap cache integration
