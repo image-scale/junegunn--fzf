@@ -159,3 +159,16 @@
 - [ ] ToMap converts all items to a map keyed by item index
 - [ ] Cacheable returns true when count is below MergerCacheMax (100000)
 - [ ] Length returns total count across all lists
+
+## Task 9: File-backed command history
+
+### Acceptance Criteria
+- [ ] NewHistory reads existing history file or creates a new one with 0600 permissions
+- [ ] NewHistory returns error for invalid paths (permission denied, directory paths)
+- [ ] History lines are split on newline, with an empty sentinel line appended at the end
+- [ ] Append adds a non-empty line to history, enforces maxSize by dropping oldest lines, and writes to file
+- [ ] Empty lines are silently ignored by Append
+- [ ] Override modifies the current line in memory without writing to file
+- [ ] Current returns the overridden value if present, otherwise the original line
+- [ ] Previous/Next navigate the cursor within bounds and return the current line
+- [ ] Cursor starts at the last position (empty sentinel line)
