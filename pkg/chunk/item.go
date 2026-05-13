@@ -8,9 +8,10 @@ import (
 )
 
 type Item struct {
-	Text     charutil.Chars
-	OrigText *[]byte
-	Colors   *[]ansi.ColorRange
+	Text        charutil.Chars
+	OrigText    *[]byte
+	Colors      *[]ansi.ColorRange
+	Transformed any
 }
 
 func (item *Item) Index() int32 {

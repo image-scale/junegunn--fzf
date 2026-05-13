@@ -125,3 +125,22 @@
 - [ ] ByRelevance and ByRelevanceTac implement sort.Interface
 - [ ] MinRank returns worst possible rank (MaxUint16 points[0], MinInt32 index)
 - [ ] CompareOffsets sorts offsets lexicographically by begin then end
+
+## Task 7: Pattern-based search with extended syntax
+
+### Acceptance Criteria
+- [ ] Term types: fuzzy, exact, exactBoundary, prefix, suffix, equal
+- [ ] ParseTerms parses extended query syntax with AND (space) and OR (|) operators
+- [ ] Negation with ! prefix inverts match logic (match found = condition fails, no match = condition succeeds)
+- [ ] Smart case: per-term in extended mode, per-pattern in non-extended; uppercase triggers case-sensitive
+- [ ] BuildPattern constructs Pattern with procFun mapping each term type to its algo function
+- [ ] Pattern.Match integrates with ChunkCache for bitmap-based incremental refinement
+- [ ] MatchItem handles both extended (AND-of-OR term matching) and basic (single fuzzy/exact) modes
+- [ ] extendedMatch returns offsets only when all termSets match (AND semantics)
+- [ ] Within each termSet, terms are OR alternatives (at least one must match)
+- [ ] Nth-field matching via transformInput tokenizes and transforms item text, caching results per revision
+- [ ] Direct fast path bypasses MatchItem for single non-inverse fuzzy term with no nth
+- [ ] Cache key built from cacheable terms only (non-inverse, single-element termSets of default type)
+- [ ] Pattern caching via patternCache map keyed by normalized string
+- [ ] Denylist and startIndex support for skipping specific items
+- [ ] iter adjusts match offsets by token prefixLength for correct positioning
