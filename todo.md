@@ -4,8 +4,8 @@
 Implement fzf's core functionality bottom-up by dependency order: start with foundational types (character handling, memory allocation, utilities), then build the matching algorithms, followed by input processing (ANSI, tokenization), then item management and caching, pattern search, result ranking, merging, and finally the coordination layers (history, reader, matcher).
 
 ## Tasks
-- [>] Task 1: Implement fuzzy text matching with character handling and scoring (algo package with Chars, Slab, FuzzyMatchV1, FuzzyMatchV2, ExactMatch, PrefixMatch, SuffixMatch, EqualMatch, character normalization, and scoring scheme initialization)
-- [ ] Task 2: Implement ANSI escape sequence parsing that strips ANSI codes from input text while tracking color/attribute state across foreground, background, underline colors, text attributes, and hyperlinks
+- [x] Task 1: Implement fuzzy text matching with character handling and scoring (algo package with Chars, Slab, FuzzyMatchV1, FuzzyMatchV2, ExactMatch, PrefixMatch, SuffixMatch, EqualMatch, character normalization, and scoring scheme initialization)
+- [>] Task 2: Implement ANSI escape sequence parsing that strips ANSI codes from input text while tracking color/attribute state across foreground, background, underline colors, text attributes, and hyperlinks
 - [ ] Task 3: Implement concurrent coordination primitives including a thread-safe boolean, an event bus with blocking wait and selective event watching, and general utility functions for display width calculation, string truncation, value clamping, and version comparison
 - [ ] Task 4: Implement text tokenization that splits input into fields using AWK-style whitespace splitting, string delimiters, or regex delimiters, with range-based field selection and reordering
 - [ ] Task 5: Implement chunk-based item storage that holds items in fixed-size arrays with thread-safe append, snapshot isolation, tail-trimming, and bitmap-based query result caching for incremental search refinement

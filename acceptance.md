@@ -26,3 +26,19 @@
 - [ ] Empty pattern returns Result{0,0,0} for fuzzy/exact/prefix, Result{len,len,0} for suffix
 - [ ] Non-matching input returns Result{-1,-1,0}
 - [ ] Long strings (>MaxUint16) are handled correctly
+
+## Task 2: ANSI escape sequence parsing
+
+### Acceptance Criteria
+- [ ] nextAnsiEscapeSequence finds CSI sequences (\x1b[...m), OSC sequences (\x1b]...), SO/SI (\x0e/\x0f), backspace overstrike (.\x08), and newlines
+- [ ] extractColor strips ANSI codes from input and returns the clean string, color offset array, and final state
+- [ ] Foreground colors are parsed from SGR 30-37 (basic), 90-97 (bright), 38;5;N (256-color), 38;2;R;G;B (24-bit)
+- [ ] Background colors are parsed from SGR 40-47 (basic), 100-107 (bright), 48;5;N (256-color), 48;2;R;G;B (24-bit)
+- [ ] Text attributes: bold (1), dim (2), italic (3), underline (4), blink (5), reverse (7), strikethrough (9)
+- [ ] Underline styles via colon sub-parameters: 4:0 (none), 4:1 (single), 4:2 (double), 4:3 (curly), 4:4 (dotted), 4:5 (dashed)
+- [ ] Underline color via SGR 58 (58;5;N for 256, 58;2;R;G;B for 24-bit)
+- [ ] SGR 0 or empty sequence resets all attributes
+- [ ] State carries over across calls when previous state is passed in
+- [ ] OSC 8 hyperlink sequences are parsed (params and URI extracted)
+- [ ] Erase to end of line ([K, [0K) sets line background from current bg
+- [ ] parseAnsiCode correctly extracts numeric values with semicolon/colon separators
