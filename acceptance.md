@@ -42,3 +42,18 @@
 - [ ] OSC 8 hyperlink sequences are parsed (params and URI extracted)
 - [ ] Erase to end of line ([K, [0K) sets line background from current bg
 - [ ] parseAnsiCode correctly extracts numeric values with semicolon/colon separators
+
+## Task 3: Concurrent coordination primitives and utility functions
+
+### Acceptance Criteria
+- [ ] AtomicBool provides thread-safe Get() and Set() using atomic int32 operations
+- [ ] EventBox provides Set/Wait/Peek/Watch/Unwatch for event coordination with mutex+condvar
+- [ ] EventBox.Wait blocks until events are set, then calls callback with event map
+- [ ] EventBox.Set broadcasts to waiters unless event is in the ignore list
+- [ ] EventBox.Watch/Unwatch controls which events trigger broadcasts
+- [ ] Constrain clamps a value between min and max
+- [ ] AsUint16 clamps an int to [0, MaxUint16]
+- [ ] Once returns a function that returns a given bool value once, then the opposite forever
+- [ ] RunesWidth calculates display width of runes with tab stop support and overflow detection
+- [ ] Truncate truncates a string to fit within a display width limit
+- [ ] CompareVersions compares dot-separated version strings numerically
