@@ -102,3 +102,26 @@
 - [ ] ChunkCache.Lookup returns exact bitmap match for a (chunk, key) pair
 - [ ] ChunkCache.Search finds bitmap for longest prefix or suffix of the key (incremental refinement)
 - [ ] ChunkCache.Clear and retire remove cache entries under lock
+
+## Task 6: Result scoring and ranking with radix sort
+
+### Acceptance Criteria
+- [ ] Offset type is [2]int32 representing [begin, end) of a matched substring
+- [ ] Result type holds *Item pointer and [4]uint16 points array for lexicographic ranking
+- [ ] Criterion enum: ByScore, ByChunk, ByLength, ByBegin, ByEnd, ByPathname
+- [ ] SortCriteria configurable slice of criteria, max 4; first criterion maps to points[3] (most significant)
+- [ ] BuildResult sorts offsets, computes minBegin/minEnd/maxEnd, delegates to BuildResultFromBounds
+- [ ] ByScore: points = MaxUint16 - score (higher score sorts first)
+- [ ] ByChunk: expands match to whitespace boundaries, stores chunk length
+- [ ] ByLength: stores item TrimLength
+- [ ] ByBegin: distance from whitespace prefix to minEnd
+- [ ] ByEnd: inverted proportion of maxEnd position within trimmed length
+- [ ] ByPathname: distance from last path separator to minBegin
+- [ ] CompareRanks compares points[3] down to points[0], tiebreaks on item index (lower wins normal, higher wins tac)
+- [ ] SortKey packs [4]uint16 into uint64 with points[3] in high bits
+- [ ] RadixSortResults uses LSD radix sort (8 passes over 64-bit key) for n>=128, falls back to comparison sort below 128
+- [ ] Radix sort skips passes where all items share the same byte value
+- [ ] In tac mode, runs of equal sort keys are reversed after sorting
+- [ ] ByRelevance and ByRelevanceTac implement sort.Interface
+- [ ] MinRank returns worst possible rank (MaxUint16 points[0], MinInt32 index)
+- [ ] CompareOffsets sorts offsets lexicographically by begin then end
