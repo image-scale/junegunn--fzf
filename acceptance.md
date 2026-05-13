@@ -185,3 +185,28 @@
 - [ ] Fin signals EvtReadFin and reports command failure (non-nil command pointer) unless killed or successful
 - [ ] Terminate kills the running process and sets killed flag under lock
 - [ ] Wait mode blocks Fin until the event poller acknowledges via finChan
+
+## Task 11: Parallel matching coordination
+
+### Acceptance Criteria
+- [ ] Matcher distributes chunks across worker goroutines using atomic counter for work stealing
+- [ ] NewMatcher configures partitions from runtime.NumCPU() or explicit thread count
+- [ ] Loop processes MatchRequests from reqBox, blocking until events arrive
+- [ ] Loop exits cleanly on reqQuit event
+- [ ] Cache invalidation on sort mode change or revision change
+- [ ] Major revision change clears ChunkCache
+- [ ] Merger cache hit returns cached result when item count unchanged and pattern matches
+- [ ] Item count change invalidates merger cache
+- [ ] scan returns empty merger for zero chunks
+- [ ] scan returns pass merger for empty pattern
+- [ ] scan spawns min(partitions, numChunks) workers
+- [ ] Workers use atomic counter to claim chunks without contention
+- [ ] Each worker accumulates matches and sends partial results via channel
+- [ ] Workers apply radix sort when sort mode is enabled and pattern is sortable
+- [ ] Progress events emitted after ProgressMinDuration (200ms)
+- [ ] Scan cancellation via cancelScan flag or reqReset in reqBox
+- [ ] CancelScan blocks new scans via scanMutex until ResumeScan
+- [ ] Reset sends MatchRequest as reqReset (cancel=true) or reqRetry (cancel=false)
+- [ ] Cacheable results stored in mergerCache keyed by pattern string
+- [ ] EvtSearchFin event set with MatchResult on successful completion
+- [ ] Pre-allocated Slab and sortBuf arrays reused across scans
